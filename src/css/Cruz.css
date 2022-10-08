@@ -1,0 +1,13 @@
+.xAxis{
+    width: 50%;
+    height: 100vh;
+    border-right: 5px solid #02d8ff;
+  }
+  
+  .yAxis{
+    width: 100%;
+    height: 50vh;
+    border-bottom: 5px solid #02d8ff;
+    position: absolute;
+    top: 0;
+  }
