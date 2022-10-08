@@ -1,18 +1,36 @@
 import "../css/AgePredictor.css"
 
+//Hooks
+import {  useState } from 'react'
+import axios from 'axios';
+
 function AgePredictor () {
 
-    const calcular = (e) => {
+    const [ agePrediction, setAgePrediction] = useState('')
+
+
+    const Calcular = (e) => {
         e.preventDefault();
-        console.log('Esta funcionando el submit');
+        
+        const name = e.target.name.value;
+
+        const endPoint = `https://api.agify.io?name=${name}`
+        axios.get(endPoint)
+        .then(res => {
+            const prediction = res.data
+            console.log(prediction);
+            setAgePrediction(prediction)
+        })
+        .catch(error => {
+            alert('error, vuelve a intentar')
+        } )
     }
-
-
+    
     return(
         <>
         <h1>Predictor de Edad</h1>
         
-        <form onSubmit={calcular}>
+        <form onSubmit={Calcular}>
             <label id='name'>Ingresa tu nombre</label>
             <input type='text' name='name'/>
             <br/>
@@ -21,6 +39,11 @@ function AgePredictor () {
             <br/>
             <button type='submit'>Calcular</button>
         </form>
+
+        <h2>Resultados</h2>
+        <p>Nombre:{agePrediction.name} </p>
+        <p>Edad:{agePrediction.age} </p>
+
         </>
     )    
 }
