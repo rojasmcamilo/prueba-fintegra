@@ -14,15 +14,17 @@
 
   .return-btn{
     position: absolute;
-    color: white;
-    background-color: #02d8ff;
+    color: black;
+    border: 1px dotted black;
     top: 10px;
     left: 10px;
     padding: 10px;
     border-radius: 15px;
     font-weight: 100px;
+    font-size: 10px;
   }
 
   .return-btn:hover{
-    background-color: #14788a;
+    background-color: black;
+    color:white;
   }

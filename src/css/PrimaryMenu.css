@@ -17,18 +17,22 @@
     align-items: center;
 }
 
+.info-conainer:hover{
+    background-color: white;
+    color: black; 
+}
+
+
+
 .info-conainer h1 {
     margin-left: 20px;
     text-align: center;
     text-transform: uppercase;
 }
+
 .info-conainer h2 {
     margin: 30px;
 }
-
-
-
-
 
 .task-container{
     height: 100vh;
@@ -49,9 +53,8 @@
 }
 
 .task-container div:hover{
-    background-color: #02d8ff;
+    background-color: black;
     color: white;
-    border-color: #02d8ff;
 }
 
 

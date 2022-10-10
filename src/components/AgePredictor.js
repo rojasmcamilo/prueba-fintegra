@@ -29,7 +29,8 @@ function AgePredictor () {
         .then(res => {
             let prediction = (typeof res.data === 'object' && countOfParams === 1 ) ? [res.data] : res.data ;
             setAgePrediction(prediction)
-
+            e.target.name.value = "";
+            e.target.country.value = "";
         })
         .catch(error => {
             alert('error, vuelve a intentar')
@@ -40,48 +41,61 @@ function AgePredictor () {
 
     return(
         <>
-        <h1>Predictor de Edad</h1>
-        <p>Este predictor te permite ingresar uno o varios nombres para calcular la edad del nombre. <br/> Tambien puedes incluir el país.</p>
+        <a href='/' className='return-btn'>Regresar al menu</a>
+        <section className="principal-age-container">
+            <div className="agepredictor-container">
+                <h1>Predecir la de edad</h1>
+                <p>Este predictor te permite ingresar uno o varios nombres para calcular la edad del nombre. <br/> Tambien puedes incluir el país.</p>
+                <form onSubmit={predict} className='prediction-form-container'>
+                    <label id='name'>Nombre(s)</label>
+                    <br/>
+                    <input type='text' name='name' required minLength='3' />
+                    <br/>
+                    <label id='country'>Selecciona tu pais <span>(opcional)</span> </label>
+                    <br/>
+                    <select type='select' name='country'>
 
-        <form onSubmit={predict} className='prediction-form-container'>
-            <label id='name'>Nombre(s)</label>
-            <br/>
-            <input type='text' name='name' required minLength='3' />
-            <br/>
-            <label id='country'>Selecciona tu pais <span>(opcional)</span> </label>
-            <br/>
-            <select type='select' name='country'>
+                    <option value="">--Please choose an option--</option>
+                    {
+                        countryList.map((country, idx) => {
+                        return (
+                            <option name='country' value={country.code} key={idx}>{country.name}</option>
+                        )
+                            
+                        })
+                    }
 
-            <option value="">--Please choose an option--</option>
-            {
-                countryList.map((country, idx) => {
-                   return (
-                    <option name='country' value={country.code} key={idx}>{country.name}</option>
-                   )
-                    
-                })
-            }
+                    </select>
 
-            </select>
+                    <br/>
+                    <button type='submit'>Calcular</button>
+                </form>
+            </div>
 
-            <br/>
-            <button type='submit'>Calcular</button>
-        </form>
+            <div className="responses-container">
+                <h2>Resultados</h2> 
+                <p></p>
+                <table className="responses-table">
+                    <tr>
+                        <th><strong>Nombre</strong></th>
+                        <th><strong>Edad</strong></th>
+                    </tr>
+                    {
+                        agePrediction.map((nombre, idx) =>{
+                            return <> 
+                            <tr key={idx}>
+                                <td>{nombre.name} </td>
+                                <td>{nombre.age} </td>
+                            </tr>
+                            </>
+                        })
+                    }
+                </table>
 
-        <h2>Resultados</h2>
-        
-        {
-            agePrediction.map((nombre, idx) =>{
-                return <> 
-                <div key={idx}>
-                    <p>nombre {nombre.name} </p>
-                    <p>edad {nombre.age} </p>
-                </div>
-                </>
-            })
-        }
-       
+            </div>
+        </section>
         </>
+        
     )    
 }
 
