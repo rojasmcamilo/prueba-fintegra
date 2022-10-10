@@ -1,9 +1,6 @@
 import "../css/AgePredictor.css"
 import { countryList } from "../data";
-
-
-//Hooks
-import {  useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios';
 
 function AgePredictor () {
@@ -15,35 +12,24 @@ function AgePredictor () {
 
         const nameInput = e.target.name.value.trim().split(" ")
         const country =e.target.country.value
+        let countOfParams 
 
-        console.log(country);
-
-        let params = nameInput.map(( person , idx ) =>{
-            if(nameInput.length === 1) {
-                return "name=" + person
-            } else {
-                return "name[]=" + person   
-             }
-        })
+        let params = nameInput.map(( person , idx ) =>{ return nameInput.length ===  1 ? "name=" + person :  "name[]=" + person })
 
         if(params.length > 1 ){
             params = params.join("&")
         } else if (params.length === 1) {
             params = params.toString()
+            countOfParams = 1
         }
         
-        let endPoint = ""
-        
-        if (country === "" ) {
-            endPoint = `https://api.agify.io/?${params}`
-            } else {
-            endPoint = `https://api.agify.io/?${params}&country_id=${country}`
-            }
-
+        let endPoint = (country === "") ?  `https://api.agify.io/?${params}` :  `https://api.agify.io/?${params}&country_id=${country}` ;
+       
         axios.get(endPoint)
         .then(res => {
-            const prediction = res.data
+            let prediction = (typeof res.data === 'object' && countOfParams === 1 ) ? [res.data] : res.data ;
             setAgePrediction(prediction)
+
         })
         .catch(error => {
             alert('error, vuelve a intentar')
@@ -78,7 +64,6 @@ function AgePredictor () {
 
             </select>
 
-            
             <br/>
             <button type='submit'>Calcular</button>
         </form>
